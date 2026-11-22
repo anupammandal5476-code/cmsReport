@@ -1,0 +1,31 @@
+# Deploy to Render - 3-Step Process
+
+## Step 1: Make GitHub Repo Public
+1. Go to https://github.com/anupammandal5476-code/cmsReport
+2. Click Settings → Accessibility → Check "Allow public access to this repository"
+3. Save changes
+
+## Step 2: Connect to Render via GitHub
+1. Go to https://render.com
+2. Click "Sign in with GitHub" (top-right)
+3. Select your GitHub account (anupammandal5476-code)
+4. Click "Authorize" to connect Render to GitHub
+
+## Step 3: Create Web Service
+1. Click "New" → "Web Service"
+2. Select "cmsReport" repository
+3. Render will auto-detect:
+   - Node.js runtime
+   - Start command: node server.js
+   - Build command: npm install
+3. Click "Create Web Service"
+4. Wait 2-3 minutes for deployment
+
+## Your Live URL
+After deployment, visit: https://cmsreport.onrender.com
+
+## Important Notes
+- Render handles HTTPS automatically (no self-signed certs needed)
+- The service will run on HTTPS at the Render domain
+- All traffic is routed through Render's edge network
+- No manual server management required
