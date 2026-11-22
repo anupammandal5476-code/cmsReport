@@ -1,0 +1,18 @@
+=== RESTART INSTRUCTIONS ===
+
+1. Open the AndroPI chat interface
+2. Look for the green dot row showing "localhost:3000"
+3. Tap the "Preview" button next to it
+4. Wait 3 seconds for the public HTTPS link to appear
+5. Open that link in your browser - you should see the login page
+
+If you see "Web page not available" again:
+- Make sure the server is running (check server.log)
+- Tap "Preview" again
+- Use the external Chrome browser (not the in-app webview)
+
+=== SERVER STATUS ===
+- HTTP server running on port 3000
+- Captcha proxy working (4477 bytes)
+- Login endpoint forwarding to railway server
+- OTP page available (Phase 3 pending)

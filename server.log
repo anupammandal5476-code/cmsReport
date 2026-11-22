@@ -1,0 +1,12 @@
+====================================
+ CMS REPORT Login Proxy Server (HTTPS)
+====================================
+ HTTPS: https://localhost:3000
+ Open in browser: https://localhost:3000
+ Accept self-signed certificate if prompted
+====================================
+[REQ] GET /
+[REQ] GET /captcha
+[CAPTCHA] Fetching: https://cms.indianrail.gov.in/CMSREPORT/JSP/rpt/LoginAction.do?hmode=getCaptch&rand_number=0.9725066&random=0.9725066
+[SESSION] JSESSIONID=0001dmAlmtR6OWRV8N6B_xfNXXj:-B46NJ8
+[CAPTCHA] Status: 200 Bytes: 4493

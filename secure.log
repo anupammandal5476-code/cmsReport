@@ -1,0 +1,7 @@
+====================================
+ CMS REPORT Login Proxy Server
+====================================
+ HTTPS: https://localhost:3443
+ HTTP:  http://localhost:3000 (redirects to HTTPS via server.js)
+ Open in browser: https://localhost:3443
+====================================

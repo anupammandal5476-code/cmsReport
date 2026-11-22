@@ -1,0 +1,58 @@
+================================================================================
+CMS REPORT WEB APP - LOGIN FLOW ANALYSIS
+Target Site: https://cms.indianrail.gov.in/CMSREPORT/JSPRWD/rpt/ReportLogin.jsp
+Generated: 2026-11-21
+Source: Playwright MCP exploration + Web app implementation
+================================================================================
+
+## FORM STRUCTURE (Page: ReportLogin.jsp)
+
+### Form Details
+- Form Action: https://cms.indianrail.gov.in/CMSREPORT/JSP/rpt/LoginAction.do
+- Form Method: POST
+- Input Fields (name -> value):
+  | Field Name    | Value                              |
+  |---------------|------------------------------------|
+  | userId        | BHC1748                            |
+  | userPassword  | Am@1989  (plaintext in web app)   |
+  | jcaptcha      | (empty string - captcha required)  |
+  | random        | dynamic number per request         |
+  | isResponsive  | Y                                  |
+  | hmode         | Login                              |
+
+### Image Assets
+  - IR.png   : Indian Railway banner
+  - cris.png : Centre For Railway Information Systems banner  
+  - img/0.jpg through img/6.jpg : CREW MANAGEMENT SYSTEM graphics
+
+### Password
+  - Plaintext: Am@1989
+  - MD5 hash (backend): dcef9ac49abcfa14ade97e391592bdd7
+
+## CAPTCHA ENDPOINT
+  GET: https://cms.indianrail.gov.in/CMSREPORT/JSP/rpt/LoginAction.do?hmode=getCaptch&rand_number=<N>&random=<N>
+  Response: image/jpeg
+  
+### CORS Note
+  - Direct cross-origin image fetching as blob is blocked by browsers (CORS).
+  - Web app loads captcha via <img> tag (works in most browsers).
+  - If CORS blocks: view image at source site in new tab.
+  - OpenRouter AI solve uses CORS proxies (allorigins.win, codetabs.com).
+
+## OPENROUTER INTEGRATION (Optional)
+  - Model: openrouter/free (auto-picks free models at $0 cost)
+  - Endpoint: https://openrouter.ai/api/v1/chat/completions
+  - API Key: Add your own key to index.html (placeholder: YOUR_OPENROUTER_API_KEY_HERE)
+  - Feature not shown on webpage - only in code comments
+
+## USER DETAILS
+  - User ID: BHC1748
+  - Password: Am@1989
+
+## NEXT PAGE AFTER LOGIN
+  - OTP verification page (not captured yet)
+
+## FILES
+  - index.html: Self-contained web app (copy folder to any device, no deploy needed)
+  - api_info.txt: This file
+  - README.md: Usage instructions

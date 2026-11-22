@@ -1,0 +1,12 @@
+What I learned about deploying to Render:
+
+1. API endpoint: POST https://api.render.com/v1/services
+2. Authentication: Bearer token (API key) in Authorization header
+3. Need to list owners first: GET https://api.render.com/v1/owners to get ownerId
+4. Create static_site service - no payment info required
+5. rootDir must be relative path (not "/")
+6. Static sites use publishPath: "public" by default
+7. Public URL format: https://{slug}.onrender.com
+8. Free tier available for static sites
+9. Static site requires repo connection to GitHub/GitHub Pages
+10. Build process handled automatically by Render for static sites

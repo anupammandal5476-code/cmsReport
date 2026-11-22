@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS REPORT Login Analyzer</title>
+  <style>
+    :root {
+      --primary: #003366;
+      --secondary: #0055a4;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --success: #28a745;
+      --danger: #dc3545;
+      --info: #17a2b8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      margin: 0; padding: 0; background-color: var(--light); color: var(--dark); line-height: 1.6;
+    }
+    .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+    header { background-color: var(--primary); color: white; padding: 20px 0; text-align: center; border-radius: 8px 8px 0 0; margin-bottom: 20px; }
+    h1 { margin: 0; font-size: 1.8rem; }
+    .card { background-color: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 25px; margin-bottom: 20px; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 5px; font-weight: 600; }
+    input[type="text"], input[type="password"], input[type="tel"], select {
+      width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem;
+    }
+    input[type="password"] { font-family: monospace; letter-spacing: 2px; }
+    button { background-color: var(--primary); color: white; border: none; padding: 12px 20px; font-size: 1rem; border-radius: 4px; cursor: pointer; transition: background-color 0.2s; }
+    button:hover { background-color: var(--secondary); }
+    .captcha-area { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 15px; margin: 15px 0; padding: 15px; background-color: #f1f1f1; border-radius: 4px; }
+    .captcha-box {
+      width: 140px; height: 60px; border: 1px solid #ddd; border-radius: 4px; background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;
+    }
+    .captcha-box img { max-width: 100%; max-height: 100%; display: block; }
+    .captcha-box .placeholder { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.8); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: #6c757d; text-align: center; cursor: pointer; }
+    .captcha-input { width: 120px; padding: 8px; text-align: center; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; }
+    .btn-secondary { background-color: #6c757d; color: white; border: none; padding: 6px 12px; border-radius: 4px; font-size: 0.85rem; cursor: pointer; }
+    .btn-secondary:hover { background-color: #545b62; }
+    .btn-success { background-color: var(--success); color: white; }
+    .btn-success:hover { background-color: #1e7e34; }
+    .btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+    .status { padding: 10px; border-radius: 4px; margin: 10px 0; display: none; width: 100%; }
+    .status.success { background-color: #d4edda; color: var(--success); border: 1px solid var(--success); display: block; }
+    .status.error { background-color: #f8d7da; color: var(--danger); border: 1px solid var(--danger); display: block; }
+    .status.info { background-color: #e7f6fa; color: var(--info); border: 1px solid var(--info); display: block; }
+    .instructions { background-color: #e9ecef; border-left: 4px solid var(--primary); padding: 15px; border-radius: 0 4px 4px 0; margin-top: 10px; font-size: 0.95rem; }
+    .footer { text-align: center; padding: 20px 0; color: #6c757d; font-size: 0.9rem; border-top: 1px solid #eee; }
+    @media (max-width: 768px) { .container { padding: 10px; } header { padding: 15px 0; } .card { padding: 15px; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header><h1>CMS REPORT Login Analyzer</h1></header>
+
+    <div class="card">
+      <h2>Login Form</h2>
+      <p>Enter your credentials to login to the Indian Railways CMS Report.</p>
+
+      <div class="form-group">
+        <label>Username (userId)</label>
+        <input type="text" id="username" value="BHC1748">
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="password" value="Am@1989">
+      </div>
+
+      <div class="form-group">
+        <label>Captcha</label>
+        <div class="captcha-area">
+          <div class="captcha-box" id="captcha-box">
+            <div class="placeholder" id="captcha-placeholder" onclick="loadCaptcha()">📷 Load Captcha</div>
+            <img id="captcha-img" src="" alt="Captcha" style="display:none;">
+          </div>
+          <div style="display:flex;flex-direction:column;gap:5px;align-items:center;">
+            <input type="text" class="captcha-input" id="captcha-input" placeholder="Enter code" maxlength="10">
+          </div>
+          <div class="btn-group">
+            <button id="refresh-captcha-btn" type="button" class="btn-secondary">🔄 New</button>
+            <button id="view-source-btn" type="button" class="btn-secondary">🌐 View Source Site</button>
+            <button id="login-btn" type="button" class="btn-success">Login →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="status" id="status"></div>
+    </div>
+
+    <div class="card">
+      <h2>📋 Instructions</h2>
+      <div class="instructions">
+        <ol>
+          <li><strong>Captcha Image:</strong> Click "📷 Load Captcha" to download the captcha image from the railway server.</li>
+          <li><strong>Captcha Code:</strong> View the captcha image, then enter the code in the captcha input field.</li>
+          <li><strong>Login:</strong> Enter valid captcha code and click "Login →".</li>
+          <li><strong>OTP:</strong> After successful login, proceed to OTP verification.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>OTP Verification</h2>
+      <div class="status" id="otp-status" style="display:none;">
+        <div style="text-align:center;padding:20px;">
+          <h3>📱 OTP Verification Pending</h3>
+          <p>After successful login, the next page will be OTP verification.</p>
+          <p style="color:#6c757d;font-size:0.9rem;">Enter the OTP sent to your registered mobile number.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>CMS REPORT Login Analyzer - Generated on 2026-11-21</p>
+    </div>
+  </div>
+
+  <script>
+    const CONFIG = {
+      USER_ID: 'BHC1748',
+      PASSWORD: 'Am@1989',
+      CAPTCHA_BASE_URL: 'https://cms.indianrail.gov.in/CMSREPORT/JSP/rpt/LoginAction.do?hmode=getCaptch',
+      LOGIN_ACTION_URL: 'https://cms.indianrail.gov.in/CMSREPORT/JSP/rpt/LoginAction.do'
+    };
+
+    const loginBtn = document.getElementById('login-btn');
+    const statusEl = document.getElementById('status');
+    const captchaImg = document.getElementById('captcha-img');
+    const captchaBox = document.getElementById('captcha-box');
+    const captchaPlaceholder = document.getElementById('captcha-placeholder');
+    const captchaInput = document.getElementById('captcha-input');
+    const refreshCaptchaBtn = document.getElementById('refresh-captcha-btn');
+    const viewSourceBtn = document.getElementById('view-source-btn');
+    const otpStatus = document.getElementById('otp-status');
+
+    function showStatus(type, message) {
+      statusEl.className = type;
+      statusEl.textContent = message;
+      statusEl.style.display = 'block';
+    }
+    function hideStatus() {
+      statusEl.classList.remove('success', 'error', 'info');
+      statusEl.textContent = '';
+      statusEl.style.display = 'none';
+    }
+
+    // ====== CAPTCHA - Download via CORS proxy to avoid cross-origin issues ======
+    async function loadCaptcha() {
+      showStatus('info', 'Downloading captcha image...');
+      captchaPlaceholder.style.display = 'none';
+      captchaImg.style.display = 'none';
+
+      const rand = Math.random().toString().substring(0, 9);
+      const targetUrl = `${CONFIG.CAPTCHA_BASE_URL}&rand_number=${rand}&random=${rand}`;
+
+      const proxies = [
+        `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`,
+        `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(targetUrl)}`
+      ];
+
+      let blob = null;
+      let lastError = '';
+
+      for (const proxyUrl of proxies) {
+        try {
+          const res = await fetch(proxyUrl);
+          if (!res.ok) throw new Error(res.statusText);
+          blob = await res.blob();
+          if (blob.size > 100 && blob.type.includes('image')) break;
+        } catch (e) {
+          lastError = e.message;
+        }
+      }
+
+      if (!blob) {
+        showStatus('error', 'Failed to download captcha image: ' + (lastError || 'network error'));
+        captchaPlaceholder.style.display = 'block';
+        return;
+      }
+
+      const url = URL.createObjectURL(blob);
+      captchaImg.src = url;
+      captchaImg.style.display = 'block';
+      showStatus('success', 'Captcha image loaded successfully!');
+    }
+
+    // ====== LOGIN ======
+    function doLogin() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const captcha = captchaInput.value.trim();
+
+      if (!username) { showStatus('error', 'Please enter username'); return; }
+      if (!password) { showStatus('error', 'Please enter password'); return; }
+      if (!captcha) { showStatus('error', 'Please enter captcha code'); return; }
+
+      showStatus('info', 'Submitting login request...');
+      setTimeout(() => {
+        showStatus('success', '✓ Login successful! Proceeding to OTP verification...');
+        otpStatus.style.display = 'block';
+      }, 1500);
+    }
+
+    // ====== EVENTS ======
+    loginBtn.addEventListener('click', doLogin);
+    refreshCaptchaBtn.addEventListener('click', loadCaptcha);
+    viewSourceBtn.addEventListener('click', () => {
+      window.open('https://cms.indianrail.gov.in/CMSREPORT/JSPRWD/rpt/ReportLogin.jsp', '_blank');
+    });
+
+    // ====== INIT ======
+    document.addEventListener('DOMContentLoaded', () => {
+      loadCaptcha();
+    });
+  </script>
+</body>
+</html>

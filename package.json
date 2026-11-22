@@ -1,0 +1,13 @@
+{
+  "name": "cmsreport",
+  "version": "1.0.0",
+  "description": "## Overview Self-contained web app that analyzes the login flow of the Indian Railways CMS Report system.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
